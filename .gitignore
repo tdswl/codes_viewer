@@ -3,3 +3,7 @@
 
 # PyCharm default virtual environment directory
 .venv/
+
+# pyinstaller
+build/
+dist/

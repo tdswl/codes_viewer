@@ -12,5 +12,5 @@ setup(
     ],
     tests_require=[
         'pytest',
-    ],
+    ]
 )
