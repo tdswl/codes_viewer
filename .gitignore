@@ -1,2 +1,5 @@
 # IDEA cache/options directory
-.idea
+.idea/
+
+# PyCharm default virtual environment directory
+.venv/
