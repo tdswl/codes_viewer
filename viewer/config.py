@@ -1,1 +1,1 @@
-# TODO: add global database connection strings
+DATABASE_PATH = '../example_files/data.db'

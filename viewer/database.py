@@ -1,5 +1,4 @@
 import sqlite3
-import sys
 
 
 class DataBase:
@@ -41,7 +40,6 @@ class DataBase:
             conn.close()
             return added_data
         except:
-
             return None
 
     def remove_code(self, code):
@@ -56,9 +54,22 @@ class DataBase:
             return False
 
     def read_code_info_by_code(self, code):
-        # TODO: create database creation function
-        return 0
+        try:
+            conn = sqlite3.connect(self.database_file_path)
+            c = conn.cursor()
+            c.execute('SELECT * FROM codes WHERE code=?', (code,))
+            result_code = c.fetchone()
+            conn.close()
+            return result_code
+        except:
+            return None
 
     def search_code_by_string(self, search_string):
-        # TODO: create database creation function
-        return 0
+        try:
+            conn = sqlite3.connect(self.database_file_path)
+            c = conn.cursor()
+            codes = [row for row in c.execute('SELECT * FROM codes WHERE code LIKE ?', ('%' + search_string + '%',))]
+            conn.close()
+            return codes
+        except:
+            return None
