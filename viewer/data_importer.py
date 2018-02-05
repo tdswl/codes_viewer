@@ -13,8 +13,20 @@ class DataImporter:
         return book_dict
 
     def create_database_file(self):
-        # TODO: create database creation function
-        return 0
+        try:
+            conn = sqlite3.connect(self.database_file_path)
+            c = conn.cursor()
+            # Create table
+            c.execute('''CREATE TABLE IF NOT EXISTS codes
+                                   (code TEXT NOT NULL PRIMARY KEY, description TEXT)''')
+            # Save (commit) the changes
+            conn.commit()
+            # We can also close the connection if we are done with it.
+            # Just be sure any changes have been committed or they will be lost.
+            conn.close()
+            return True
+        except:
+            return False
 
     def add_codes_to_database(self, codes_dict):
         # TODO: create add codes function

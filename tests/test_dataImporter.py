@@ -1,11 +1,14 @@
-import pytest
+import pytest, os
 from collections import OrderedDict
 from viewer.data_importer import DataImporter
+
+TEST_DATABASE_PATH = 'data_tests.db'
 
 
 @pytest.fixture(scope="module")
 def importer():
-    return DataImporter('../example_files/test.xls', 'data.db')
+    yield DataImporter('../example_files/test.xls', TEST_DATABASE_PATH)
+    os.remove(TEST_DATABASE_PATH)
 
 
 class TestDataImporter(object):
@@ -24,8 +27,9 @@ class TestDataImporter(object):
         assert codes == except_result
 
     def test_create_database_file(self, importer):
-        importer.create_database_file()
-        assert True
+        is_database_created = importer.create_database_file()
+        is_dbfile_exists = os.path.exists(TEST_DATABASE_PATH)
+        assert is_database_created and is_dbfile_exists
 
     def test_add_codes_to_database(self, importer):
         assert True
