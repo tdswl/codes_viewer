@@ -8,6 +8,8 @@ TEST_DATABASE_PATH = 'data_tests.db'
 
 @pytest.fixture(scope="module")
 def importer():
+    if os.path.exists(TEST_DATABASE_PATH):
+        os.remove(TEST_DATABASE_PATH)
     yield DataImporter('../example_files/test.xls', TEST_DATABASE_PATH)
     os.remove(TEST_DATABASE_PATH)
 
