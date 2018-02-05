@@ -8,9 +8,9 @@ class DataImporter:
         self.database_file_path = database_file_path
 
     def read_codes_from_excel(self):
-        # TODO: create excel read function
-        book_dict = pyexcel.get_book_dict(file_name=self.excel_file_path)
-        return book_dict
+        spreadsheet = pyexcel.get_sheet(file_name=self.excel_file_path)
+        codes = [tuple(row) for row in spreadsheet.rows()]  # prepare data for easy work in sqlite
+        return codes
 
     def create_database_file(self):
         try:
@@ -28,6 +28,13 @@ class DataImporter:
         except:
             return False
 
-    def add_codes_to_database(self, codes_dict):
-        # TODO: create add codes function
-        return 0
+    def add_codes_to_database(self, codes_array):
+        try:
+            conn = sqlite3.connect(self.database_file_path)
+            c = conn.cursor()
+            c.executemany('INSERT INTO codes VALUES (?,?)', codes_array)
+            conn.commit()
+            conn.close()
+            return True
+        except:
+            return False
