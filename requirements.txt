@@ -1,4 +1,5 @@
 pyexcel>=0.5.7
+pyexcel-xls>=0.5.5
 pytest>=3.4.0
 pytest-runner>=3.0.0
 pyinstaller>=3.3.1

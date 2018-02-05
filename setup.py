@@ -6,6 +6,7 @@ setup(
     include_package_data=True,
     install_requires=[
         'pyexcel',
+        'pyexcel-xls'
     ],
     setup_requires=[
         'pytest-runner',
