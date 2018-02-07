@@ -22,6 +22,8 @@ cipher_obj = None
 
 a = Analysis(
     ["../viewer/app.py"],
+    pathex=['C:/Program Files (x86)/Windows Kits/10/Redist/ucrt/DLLs/x64'],
+    datas=[( '../viewer/views/*.qml', 'views/')],
     cipher=cipher_obj,
     win_private_assemblies=True,
     win_no_prefer_redirects=True,
