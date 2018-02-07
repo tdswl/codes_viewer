@@ -1,5 +1,5 @@
 import pyexcel
-
+from viewer.database import Code
 
 class DataImporter:
     def __init__(self, excel_file_path):
@@ -7,7 +7,7 @@ class DataImporter:
 
     def read_codes_from_excel(self):
         spreadsheet = pyexcel.get_sheet(file_name=self.excel_file_path)
-        codes = [tuple(row) for row in spreadsheet.rows()]  # prepare data for easy work in sqlite
+        codes = [Code(row[0], row[1]) for row in spreadsheet.rows()]  # prepare data for easy work in sqlite
         return codes
 
     def import_from_excel_to_database(self, db):

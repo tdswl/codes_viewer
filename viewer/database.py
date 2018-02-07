@@ -1,6 +1,15 @@
 import sqlite3
 
 
+class Code:
+    def __init__(self, code, description):
+        self.code = code
+        self.description = description
+
+    def __eq__(self, other):
+        return self.code == other.code and self.description == other.description
+
+
 class DataBase:
     def __init__(self, database_file_path):
         self.database_file_path = database_file_path
@@ -21,11 +30,11 @@ class DataBase:
         except:
             return False
 
-    def add_codes_to_database(self, codes_array):
+    def add_codes_to_database(self, codes_array: [Code]):
         try:
             conn = sqlite3.connect(self.database_file_path)
             c = conn.cursor()
-            c.executemany('INSERT INTO codes VALUES (?,?)', codes_array)
+            c.executemany('INSERT INTO codes VALUES (?,?)', [(code.code, code.description) for code in codes_array])
             conn.commit()
             conn.close()
             return True
@@ -36,7 +45,7 @@ class DataBase:
         try:
             conn = sqlite3.connect(self.database_file_path)
             c = conn.cursor()
-            added_data = [row for row in c.execute('SELECT * FROM codes')]
+            added_data = [Code(row[0], row[1]) for row in c.execute('SELECT * FROM codes')]
             conn.close()
             return added_data
         except:
@@ -60,7 +69,7 @@ class DataBase:
             c.execute('SELECT * FROM codes WHERE code=?', (code,))
             result_code = c.fetchone()
             conn.close()
-            return result_code
+            return Code(result_code[0], result_code[1])
         except:
             return None
 
@@ -68,7 +77,8 @@ class DataBase:
         try:
             conn = sqlite3.connect(self.database_file_path)
             c = conn.cursor()
-            codes = [row for row in c.execute('SELECT * FROM codes WHERE code LIKE ?', ('%' + search_string + '%',))]
+            codes = [Code(row[0], row[1]) for row in
+                     c.execute('SELECT * FROM codes WHERE code LIKE ?', ('%' + search_string + '%',))]
             conn.close()
             return codes
         except:
