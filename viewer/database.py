@@ -1,10 +1,28 @@
 import sqlite3
+from PyQt5.QtCore import pyqtProperty, QObject
 
 
-class Code:
+class Code(QObject):
     def __init__(self, code, description):
-        self.code = code
-        self.description = description
+        QObject.__init__(self)
+        self._code = code
+        self._description = description
+
+    @pyqtProperty(str)
+    def code(self):
+        return self._code
+
+    @code.setter
+    def code(self, value):
+        self._code = value
+
+    @pyqtProperty(str)
+    def description(self):
+        return self._description
+
+    @description.setter
+    def description(self, value):
+        self._description = value
 
     def __eq__(self, other):
         return self.code == other.code and self.description == other.description
