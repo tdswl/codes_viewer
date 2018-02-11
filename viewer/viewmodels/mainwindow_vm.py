@@ -1,12 +1,11 @@
 from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot, QVariant
-from viewer.database import DataBase, Code
-
-DB_PATH = "../example_files/data.db"
+from viewer.database import DataBase
+from viewer import config
 
 class MainWindowViewModel(QObject):
     def __init__(self):
         QObject.__init__(self)
-        self._db = DataBase(DB_PATH)
+        self._db = DataBase(config.DATABASE_PATH)
         self._search_string = ""
         self._selected_code = None
         self._codes = []

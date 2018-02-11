@@ -11,18 +11,25 @@ ApplicationWindow {
     color: "whitesmoke"
 
     ColumnLayout {
-        spacing: 2
+        anchors.margins: 10
+        anchors.fill: parent
 
         ListModel {
             id: codesComboboxModel
         }
 
+        Text {
+            font.pointSize: 15
+            text: "Code:"
+        }
+
         ComboBox {
-            id: codesCombobox;
-            editable: true;
+            id: codesCombobox
+            Layout.fillWidth: true
+            editable: true
+            font.pointSize: 12
             model: codesComboboxModel
-            textRole: 'text'
-            delegate: codesComboboxDelegate
+            textRole: "text"
             onAccepted: {
                 mainwindowVm.search(codesCombobox.editText)
             }
@@ -30,8 +37,28 @@ ApplicationWindow {
                 mainwindowVm.selected_code_changed(codesComboboxModel.get(index).value)
             }
         }
+
         Text {
-            id: descriptionText;
+            Layout.topMargin: 10
+            font.pointSize: 15
+            text: "Description:"
+        }
+
+        Rectangle {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            border.width: 1
+            border.color: "#e0e0e0"
+            color: "white"
+
+            TextArea {
+                id: descriptionText;
+                font.pointSize: 12
+                anchors.fill: parent
+                selectByMouse: true
+                selectByKeyboard: true
+                readOnly: true
+            }
         }
     }
 
@@ -41,8 +68,13 @@ ApplicationWindow {
         // signal handler
         onSearchStringResult: {
             codesComboboxModel.clear()
-            for (var i = 0; i < mainwindowVm.codes.length; i++) {
-                codesComboboxModel.append({text:  mainwindowVm.codes[i].code, value : mainwindowVm.codes[i]})
+            if (mainwindowVm.codes.length)
+            {
+                for (var i = 0; i < mainwindowVm.codes.length; i++) {
+                    codesComboboxModel.append({text:  mainwindowVm.codes[i].code, value : mainwindowVm.codes[i]})
+                }
+                codesCombobox.popup.activeFocus = true
+                codesCombobox.popup.open()
             }
         }
         onSelectedCodeChanged: {
