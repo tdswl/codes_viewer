@@ -2,6 +2,8 @@ import sys
 from PyQt5.QtCore import QUrl
 from PyQt5.QtGui import QGuiApplication
 from PyQt5.QtQml import QQmlApplicationEngine
+# Do this import for the pyinstaller PyQt.Quick hook.
+from PyQt5 import QtQuick
 from viewer.viewmodels.mainwindow_vm import MainWindowViewModel
 
 if __name__ == '__main__':
