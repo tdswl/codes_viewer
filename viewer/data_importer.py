@@ -1,6 +1,7 @@
 import pyexcel
 from viewer.database import Code
 
+
 class DataImporter:
     def __init__(self, excel_file_path):
         self.excel_file_path = excel_file_path

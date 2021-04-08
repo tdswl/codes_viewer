@@ -2,6 +2,7 @@ from PyQt5.QtCore import QObject, pyqtProperty, pyqtSignal, pyqtSlot, QVariant
 from viewer.database import DataBase
 from viewer import config
 
+
 class MainWindowViewModel(QObject):
     def __init__(self):
         QObject.__init__(self)
